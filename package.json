@@ -1,0 +1,14 @@
+{
+  "name": "x-simplify",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "build": "wxt build"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.2",
+    "wxt": "^0.19.25"
+  }
+}

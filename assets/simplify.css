@@ -1,0 +1,67 @@
+/*
+ * X-Simplify: CSS rules to hide distracting UI elements on X.com
+ * All rules are gated under html.xs-enabled so toggle is instant.
+ */
+
+/* ============================================================
+ * LEFT SIDEBAR — hide navigation items except:
+ *   X logo, Bookmarks, Profile, Post button, bottom user card
+ * ============================================================ */
+
+/* Hide nav items by data-testid */
+html.xs-enabled [data-testid="AppTabBar_Home_Link"],
+html.xs-enabled [data-testid="AppTabBar_Explore_Link"],
+html.xs-enabled [data-testid="AppTabBar_Notifications_Link"],
+html.xs-enabled [data-testid="AppTabBar_DirectMessage_Link"],
+html.xs-enabled [data-testid="AppTabBar_Grok_Link"],
+html.xs-enabled [data-testid="AppTabBar_More_Button"] {
+  display: none !important;
+}
+
+/* Hide nav items by href (fallback for items without data-testid) */
+html.xs-enabled nav a[href*="/i/premium"],
+html.xs-enabled nav a[href*="/i/verified-choose"],
+html.xs-enabled nav a[href*="/creator-studio"],
+html.xs-enabled nav a[href*="/articles"],
+html.xs-enabled nav a[href*="/i/communities"],
+html.xs-enabled nav a[href*="/i/lists"] {
+  display: none !important;
+}
+
+/* ============================================================
+ * RIGHT SIDEBAR — hide everything except the search box
+ * ============================================================ */
+
+/* Trending / What's happening sections */
+html.xs-enabled [data-testid="sidebarColumn"] [data-testid="trend"],
+html.xs-enabled [data-testid="sidebarColumn"] section:has([data-testid="trend"]) {
+  display: none !important;
+}
+
+/* Who to follow section */
+html.xs-enabled [data-testid="sidebarColumn"] [data-testid="UserCell"],
+html.xs-enabled [data-testid="sidebarColumn"] section:has([data-testid="UserCell"]) {
+  display: none !important;
+}
+
+/* Premium upsell cards */
+html.xs-enabled [data-testid="sidebarColumn"] a[href*="/i/premium"],
+html.xs-enabled [data-testid="sidebarColumn"] a[href*="/i/verified-choose"] {
+  display: none !important;
+}
+
+/* "Live on X" section */
+html.xs-enabled [data-testid="sidebarColumn"] a[href*="/i/live"] {
+  display: none !important;
+}
+
+/* Generic sidebar card containers (aside from search) —
+   hide any aside that doesn't contain the search box */
+html.xs-enabled [data-testid="sidebarColumn"] aside:not(:has([data-testid="SearchBox_Search_Input"])) {
+  display: none !important;
+}
+
+/* Footer links in sidebar */
+html.xs-enabled [data-testid="sidebarColumn"] nav[aria-label="Footer"] {
+  display: none !important;
+}
