@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../assets/popup.css">
+</head>
+<body>
+  <h1>X-Simplify</h1>
+
+  <div class="row">
+    <span>Enabled</span>
+    <label class="switch">
+      <input type="checkbox" id="toggle" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="row">
+    <span>Theme</span>
+    <select id="theme">
+      <option value="default">Default</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="solarized">Solarized</option>
+      <option value="ocean">Ocean</option>
+    </select>
+  </div>
+
+  <script type="module" src="../lib/popup.ts"></script>
+</body>
+</html>

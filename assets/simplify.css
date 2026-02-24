@@ -57,10 +57,152 @@ html.xs-enabled.xs-nav-expanded .xs-toggle svg {
 }
 
 /* ============================================================
- * RIGHT SIDEBAR — hide everything except the search box
- * All content blocks are direct children of [aria-label="Trending"] > div.
- * One rule hides every block that doesn't contain the search input.
+ * RIGHT SIDEBAR — hide all content blocks (search, trends, etc.)
  * ============================================================ */
-html.xs-enabled [data-testid="sidebarColumn"] [aria-label="Trending"] > div > div:not(:has([data-testid="SearchBox_Search_Input"])) {
+html.xs-enabled [data-testid="sidebarColumn"] [aria-label="Trending"] > div > div {
   display: none !important;
+}
+
+/* ============================================================
+ * COMPOSE BOX — hide the post input area at the top of timeline.
+ *   Users can still post via the sidebar Post button or press `n`.
+ * ============================================================ */
+html.xs-enabled [data-testid="primaryColumn"] > div > div:has([data-testid="toolBar"]) {
+  display: none !important;
+}
+
+/* ============================================================
+ * THEME SYSTEM — CSS custom properties + element overrides
+ * Each theme defines variables on html.xs-theme-{name}.
+ * Overrides apply when both xs-enabled and a theme class exist.
+ * ============================================================ */
+
+/* --- Light theme --- */
+html.xs-theme-light {
+  --xs-bg-primary: #ffffff;
+  --xs-bg-secondary: #f7f9fa;
+  --xs-bg-hover: #f0f2f5;
+  --xs-text-primary: #0f141a;
+  --xs-text-secondary: #536471;
+  --xs-border: #eff3f4;
+  --xs-accent: #1d9bf0;
+  --xs-card-bg: #ffffff;
+}
+
+/* --- Dark theme --- */
+html.xs-theme-dark {
+  --xs-bg-primary: #15202b;
+  --xs-bg-secondary: #192734;
+  --xs-bg-hover: #1e2d3d;
+  --xs-text-primary: #e7e9ea;
+  --xs-text-secondary: #8b98a5;
+  --xs-border: #38444d;
+  --xs-accent: #1d9bf0;
+  --xs-card-bg: #192734;
+}
+
+/* --- Solarized theme --- */
+html.xs-theme-solarized {
+  --xs-bg-primary: #fdf6e3;
+  --xs-bg-secondary: #eee8d5;
+  --xs-bg-hover: #e8e1cc;
+  --xs-text-primary: #657b83;
+  --xs-text-secondary: #93a1a1;
+  --xs-border: #eee8d5;
+  --xs-accent: #268bd2;
+  --xs-card-bg: #fdf6e3;
+}
+
+/* --- Ocean theme --- */
+html.xs-theme-ocean {
+  --xs-bg-primary: #0b1929;
+  --xs-bg-secondary: #0f2137;
+  --xs-bg-hover: #132a45;
+  --xs-text-primary: #c8d6e5;
+  --xs-text-secondary: #8395a7;
+  --xs-border: #1a3350;
+  --xs-accent: #48dbfb;
+  --xs-card-bg: #0f2137;
+}
+
+/* --- Element overrides (active when enabled + any non-default theme) --- */
+html.xs-enabled[class*="xs-theme-"] body {
+  background-color: var(--xs-bg-primary) !important;
+}
+
+html.xs-enabled[class*="xs-theme-"] header[role="banner"] {
+  background-color: var(--xs-bg-primary) !important;
+}
+
+html.xs-enabled[class*="xs-theme-"] [data-testid="primaryColumn"] {
+  background-color: var(--xs-bg-primary) !important;
+  border-color: var(--xs-border) !important;
+}
+
+html.xs-enabled[class*="xs-theme-"] [data-testid="sidebarColumn"] {
+  background-color: var(--xs-bg-primary) !important;
+}
+
+/* All borders inside main content and sidebar */
+html.xs-enabled[class*="xs-theme-"] [data-testid="primaryColumn"] * {
+  border-color: var(--xs-border) !important;
+}
+
+html.xs-enabled[class*="xs-theme-"] [data-testid="tweetText"] {
+  color: var(--xs-text-primary) !important;
+}
+
+html.xs-enabled[class*="xs-theme-"] [data-testid="User-Name"] span {
+  color: var(--xs-text-secondary) !important;
+}
+
+html.xs-enabled[class*="xs-theme-"] [data-testid="User-Name"] a > div > span {
+  color: var(--xs-text-primary) !important;
+}
+
+html.xs-enabled[class*="xs-theme-"] nav[aria-label="Primary"] span {
+  color: var(--xs-text-primary) !important;
+}
+
+
+/* User card (bottom-left) */
+html.xs-enabled[class*="xs-theme-"] [data-testid="SideNav_AccountSwitcher_Button"] span {
+  color: var(--xs-text-primary) !important;
+}
+
+/* X logo — ensure SVG is visible on dark backgrounds */
+html.xs-enabled[class*="xs-theme-"] h1[role="heading"] a svg {
+  color: var(--xs-text-primary) !important;
+}
+
+html.xs-enabled[class*="xs-theme-"] .xs-toggle {
+  color: var(--xs-text-primary) !important;
+}
+
+html.xs-enabled[class*="xs-theme-"] .xs-toggle:hover {
+  background-color: var(--xs-bg-hover) !important;
+}
+
+/* Tab bar */
+html.xs-enabled[class*="xs-theme-"] [role="tablist"] {
+  background-color: var(--xs-bg-primary) !important;
+  border-color: var(--xs-border) !important;
+}
+
+html.xs-enabled[class*="xs-theme-"] [role="tab"] span {
+  color: var(--xs-text-secondary) !important;
+}
+
+html.xs-enabled[class*="xs-theme-"] [role="tab"][aria-selected="true"] span {
+  color: var(--xs-text-primary) !important;
+}
+
+/* Card / tweet action bar icons */
+html.xs-enabled[class*="xs-theme-"] [role="group"] [data-testid] svg {
+  color: var(--xs-text-secondary) !important;
+}
+
+/* Links / accent color */
+html.xs-enabled[class*="xs-theme-"] a[href*="/status/"] time {
+  color: var(--xs-text-secondary) !important;
 }

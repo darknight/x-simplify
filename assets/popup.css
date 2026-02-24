@@ -1,0 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 240px;
+  padding: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  color: #0f141a;
+  background: #fff;
+}
+
+h1 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+/* Toggle switch */
+.switch {
+  position: relative;
+  width: 40px;
+  height: 22px;
+}
+.switch input { display: none; }
+.slider {
+  position: absolute;
+  inset: 0;
+  background: #ccc;
+  border-radius: 22px;
+  cursor: pointer;
+  transition: background 200ms;
+}
+.slider::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 200ms;
+}
+.switch input:checked + .slider {
+  background: #1d9bf0;
+}
+.switch input:checked + .slider::before {
+  transform: translateX(18px);
+}
+
+/* Select */
+select {
+  padding: 4px 8px;
+  border: 1px solid #cfd9de;
+  border-radius: 6px;
+  font-size: 13px;
+  background: #fff;
+  color: #0f141a;
+  cursor: pointer;
+}
+select:focus {
+  outline: none;
+  border-color: #1d9bf0;
+}

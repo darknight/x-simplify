@@ -1,14 +1,18 @@
 export default defineBackground(() => {
-  // Toggle enabled state when toolbar icon is clicked
-  browser.action.onClicked.addListener(async (tab) => {
-    if (!tab.id || !(tab.url?.includes('x.com') || tab.url?.includes('twitter.com'))) {
-      return;
+  const X_URLS = ['*://x.com/*', '*://twitter.com/*'];
+
+  async function broadcast(message: Record<string, unknown>) {
+    const tabs = await browser.tabs.query({ url: X_URLS });
+    for (const tab of tabs) {
+      if (tab.id) browser.tabs.sendMessage(tab.id, message).catch(() => {});
     }
+  }
 
-    const current = await storage.getItem<boolean>('local:enabled');
-    const next = !(current ?? true);
-    await storage.setItem('local:enabled', next);
+  storage.watch<boolean>('local:enabled', (newValue) => {
+    broadcast({ type: 'TOGGLE', enabled: newValue ?? true });
+  });
 
-    await browser.tabs.sendMessage(tab.id, { type: 'TOGGLE', enabled: next });
+  storage.watch<string>('local:theme', (newTheme) => {
+    broadcast({ type: 'SET_THEME', theme: newTheme ?? 'default' });
   });
 });
