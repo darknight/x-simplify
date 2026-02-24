@@ -4,64 +4,63 @@
  */
 
 /* ============================================================
- * LEFT SIDEBAR — hide navigation items except:
+ * LEFT SIDEBAR — collapse navigation items except:
  *   X logo, Bookmarks, Profile, Post button, bottom user card
+ * Collapsed by default; expands on hover over the nav area.
  * ============================================================ */
 
-/* Hide nav items by data-testid */
-html.xs-enabled [data-testid="AppTabBar_Home_Link"],
-html.xs-enabled [data-testid="AppTabBar_Explore_Link"],
-html.xs-enabled [data-testid="AppTabBar_Notifications_Link"],
-html.xs-enabled [data-testid="AppTabBar_DirectMessage_Link"],
-html.xs-enabled [data-testid="AppTabBar_Grok_Link"],
-html.xs-enabled [data-testid="AppTabBar_More_Button"] {
-  display: none !important;
+/* Collapsed state (default) */
+html.xs-enabled :is(
+  [data-testid="AppTabBar_Home_Link"],
+  [data-testid="AppTabBar_Explore_Link"],
+  [data-testid="AppTabBar_Notifications_Link"],
+  [data-testid="AppTabBar_DirectMessage_Link"],
+  [data-testid="AppTabBar_More_Menu"],
+  nav a[href*="/i/grok"],
+  nav a[href*="/i/premium"],
+  nav a[href*="/i/verified-choose"],
+  nav a[href*="/creators/studio"],
+  nav a[href*="/articles"],
+  nav a[href*="/i/communities"],
+  nav a[href*="/i/lists"]
+) {
+  max-height: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: max-height 200ms ease-out 150ms,
+              opacity 150ms ease-out 150ms,
+              visibility 0s ease-out 350ms !important;
 }
 
-/* Hide nav items by href (fallback for items without data-testid) */
-html.xs-enabled nav a[href*="/i/premium"],
-html.xs-enabled nav a[href*="/i/verified-choose"],
-html.xs-enabled nav a[href*="/creator-studio"],
-html.xs-enabled nav a[href*="/articles"],
-html.xs-enabled nav a[href*="/i/communities"],
-html.xs-enabled nav a[href*="/i/lists"] {
-  display: none !important;
+/* Expanded state (on hover) */
+html.xs-enabled nav[aria-label="Primary"]:hover :is(
+  [data-testid="AppTabBar_Home_Link"],
+  [data-testid="AppTabBar_Explore_Link"],
+  [data-testid="AppTabBar_Notifications_Link"],
+  [data-testid="AppTabBar_DirectMessage_Link"],
+  [data-testid="AppTabBar_More_Menu"],
+  a[href*="/i/grok"],
+  a[href*="/i/premium"],
+  a[href*="/i/verified-choose"],
+  a[href*="/creators/studio"],
+  a[href*="/articles"],
+  a[href*="/i/communities"],
+  a[href*="/i/lists"]
+) {
+  max-height: 60px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: max-height 200ms ease-out 0s,
+              opacity 150ms ease-out 0s,
+              visibility 0s ease-out 0s !important;
 }
 
 /* ============================================================
  * RIGHT SIDEBAR — hide everything except the search box
+ * All content blocks are direct children of [aria-label="Trending"] > div.
+ * One rule hides every block that doesn't contain the search input.
  * ============================================================ */
-
-/* Trending / What's happening sections */
-html.xs-enabled [data-testid="sidebarColumn"] [data-testid="trend"],
-html.xs-enabled [data-testid="sidebarColumn"] section:has([data-testid="trend"]) {
-  display: none !important;
-}
-
-/* Who to follow section */
-html.xs-enabled [data-testid="sidebarColumn"] [data-testid="UserCell"],
-html.xs-enabled [data-testid="sidebarColumn"] section:has([data-testid="UserCell"]) {
-  display: none !important;
-}
-
-/* Premium upsell cards */
-html.xs-enabled [data-testid="sidebarColumn"] a[href*="/i/premium"],
-html.xs-enabled [data-testid="sidebarColumn"] a[href*="/i/verified-choose"] {
-  display: none !important;
-}
-
-/* "Live on X" section */
-html.xs-enabled [data-testid="sidebarColumn"] a[href*="/i/live"] {
-  display: none !important;
-}
-
-/* Generic sidebar card containers (aside from search) —
-   hide any aside that doesn't contain the search box */
-html.xs-enabled [data-testid="sidebarColumn"] aside:not(:has([data-testid="SearchBox_Search_Input"])) {
-  display: none !important;
-}
-
-/* Footer links in sidebar */
-html.xs-enabled [data-testid="sidebarColumn"] nav[aria-label="Footer"] {
+html.xs-enabled [data-testid="sidebarColumn"] [aria-label="Trending"] > div > div:not(:has([data-testid="SearchBox_Search_Input"])) {
   display: none !important;
 }
