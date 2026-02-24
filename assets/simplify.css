@@ -4,26 +4,13 @@
  */
 
 /* ============================================================
- * LEFT SIDEBAR — collapse navigation items except:
- *   X logo, Bookmarks, Profile, Post button, bottom user card
- * Collapsed by default; expands on hover over the nav area.
+ * LEFT SIDEBAR — collapse ALL navigation items.
+ *   X logo, Post button, and user card are outside <nav> so
+ *   they remain visible. A ··· hint tells users to hover.
  * ============================================================ */
 
-/* Collapsed state (default) */
-html.xs-enabled :is(
-  [data-testid="AppTabBar_Home_Link"],
-  [data-testid="AppTabBar_Explore_Link"],
-  [data-testid="AppTabBar_Notifications_Link"],
-  [data-testid="AppTabBar_DirectMessage_Link"],
-  [data-testid="AppTabBar_More_Menu"],
-  nav a[href*="/i/grok"],
-  nav a[href*="/i/premium"],
-  nav a[href*="/i/verified-choose"],
-  nav a[href*="/creators/studio"],
-  nav a[href*="/articles"],
-  nav a[href*="/i/communities"],
-  nav a[href*="/i/lists"]
-) {
+/* Collapsed state (default) — hide every direct child of nav */
+html.xs-enabled nav[aria-label="Primary"] > * {
   max-height: 0 !important;
   overflow: hidden !important;
   opacity: 0 !important;
@@ -34,26 +21,30 @@ html.xs-enabled :is(
 }
 
 /* Expanded state (on hover) */
-html.xs-enabled nav[aria-label="Primary"]:hover :is(
-  [data-testid="AppTabBar_Home_Link"],
-  [data-testid="AppTabBar_Explore_Link"],
-  [data-testid="AppTabBar_Notifications_Link"],
-  [data-testid="AppTabBar_DirectMessage_Link"],
-  [data-testid="AppTabBar_More_Menu"],
-  a[href*="/i/grok"],
-  a[href*="/i/premium"],
-  a[href*="/i/verified-choose"],
-  a[href*="/creators/studio"],
-  a[href*="/articles"],
-  a[href*="/i/communities"],
-  a[href*="/i/lists"]
-) {
+html.xs-enabled nav[aria-label="Primary"]:hover > * {
   max-height: 60px !important;
   opacity: 1 !important;
   visibility: visible !important;
   transition: max-height 200ms ease-out 0s,
               opacity 150ms ease-out 0s,
               visibility 0s ease-out 0s !important;
+}
+
+/* Hover hint — ··· indicator visible when collapsed */
+html.xs-enabled nav[aria-label="Primary"]::after {
+  content: "···";
+  display: block;
+  text-align: center;
+  color: rgb(113, 118, 123);
+  font-size: 20px;
+  letter-spacing: 4px;
+  padding: 8px 0;
+  opacity: 0.6;
+  transition: opacity 150ms ease-out !important;
+}
+
+html.xs-enabled nav[aria-label="Primary"]:hover::after {
+  opacity: 0;
 }
 
 /* ============================================================
