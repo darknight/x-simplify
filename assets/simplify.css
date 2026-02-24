@@ -4,13 +4,15 @@
  */
 
 /* ============================================================
- * LEFT SIDEBAR — collapse ALL navigation items.
- *   X logo, Post button, and user card are outside <nav> so
- *   they remain visible. A ··· hint tells users to hover.
+ * LEFT SIDEBAR — collapse nav items + Post button.
+ *   X logo and user card stay visible. A ··· hint tells users
+ *   to hover. The <header> wraps nav + Post, so it serves as
+ *   the hover trigger to expand everything at once.
  * ============================================================ */
 
-/* Collapsed state (default) — hide every direct child of nav */
-html.xs-enabled nav[aria-label="Primary"] > * {
+/* Collapsed state (default) — nav items + Post button */
+html.xs-enabled nav[aria-label="Primary"] > *,
+html.xs-enabled header[role="banner"] a[href="/compose/post"] {
   max-height: 0 !important;
   overflow: hidden !important;
   opacity: 0 !important;
@@ -20,8 +22,9 @@ html.xs-enabled nav[aria-label="Primary"] > * {
               visibility 0s ease-out 350ms !important;
 }
 
-/* Expanded state (on hover) */
-html.xs-enabled nav[aria-label="Primary"]:hover > * {
+/* Expanded state — header:hover expands both nav items and Post */
+html.xs-enabled header[role="banner"]:hover nav[aria-label="Primary"] > *,
+html.xs-enabled header[role="banner"]:hover a[href="/compose/post"] {
   max-height: 60px !important;
   opacity: 1 !important;
   visibility: visible !important;
@@ -43,7 +46,7 @@ html.xs-enabled nav[aria-label="Primary"]::after {
   transition: opacity 150ms ease-out !important;
 }
 
-html.xs-enabled nav[aria-label="Primary"]:hover::after {
+html.xs-enabled header[role="banner"]:hover nav[aria-label="Primary"]::after {
   opacity: 0;
 }
 
