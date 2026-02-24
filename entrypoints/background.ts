@@ -11,8 +11,4 @@ export default defineBackground(() => {
   storage.watch<boolean>('local:enabled', (newValue) => {
     broadcast({ type: 'TOGGLE', enabled: newValue ?? true });
   });
-
-  storage.watch<string>('local:theme', (newTheme) => {
-    broadcast({ type: 'SET_THEME', theme: newTheme ?? 'default' });
-  });
 });
