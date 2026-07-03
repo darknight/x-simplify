@@ -11,4 +11,8 @@ export default defineBackground(() => {
   storage.watch<boolean>('local:enabled', (newValue) => {
     broadcast({ type: 'TOGGLE', enabled: newValue ?? true });
   });
+
+  storage.watch<boolean>('local:collapseVideos', (newValue) => {
+    broadcast({ type: 'TOGGLE_VIDEOS', enabled: newValue ?? true });
+  });
 });

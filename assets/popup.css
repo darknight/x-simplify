@@ -59,3 +59,11 @@ h1 {
   transform: translateX(18px);
 }
 
+/* Sub-option rows greyed out while the extension is disabled */
+.row.disabled {
+  opacity: 0.45;
+}
+.row.disabled .slider {
+  cursor: not-allowed;
+}
+

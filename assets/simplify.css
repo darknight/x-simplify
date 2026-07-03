@@ -71,3 +71,49 @@ html.xs-enabled [data-testid="primaryColumn"] > div > div:has([data-testid="tool
   display: none !important;
 }
 
+/* ============================================================
+ * VIDEO TWEETS — collapse video players behind a placeholder
+ *   tag (stops autoplay). Content script marks the elements;
+ *   everything visual is gated here so toggles stay instant.
+ * ============================================================ */
+.xs-video-placeholder {
+  display: none;
+}
+
+html.xs-enabled.xs-collapse-videos .xs-video-collapse {
+  display: none !important;
+}
+
+html.xs-enabled.xs-collapse-videos .xs-video-placeholder {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin: 12px 0 4px;
+  padding: 10px 14px;
+  border: 1px solid rgba(139, 152, 165, 0.4);
+  border-radius: 12px;
+  background: rgba(139, 152, 165, 0.08);
+  color: inherit;
+  /* Match X's tweet text (a <button> would otherwise fall back to serif). */
+  font-family: TwitterChirp, -apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 150ms;
+}
+html.xs-enabled.xs-collapse-videos .xs-video-placeholder:hover {
+  background: rgba(139, 152, 165, 0.18);
+}
+.xs-video-placeholder svg {
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.xs-video-placeholder .xs-video-tag {
+  font-weight: 700;
+}
+.xs-video-placeholder .xs-video-hint {
+  margin-left: auto;
+  opacity: 0.6;
+}
+
