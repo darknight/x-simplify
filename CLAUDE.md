@@ -8,6 +8,31 @@ gated behind `html.xs-enabled` classes so toggles are instant. Content script:
 - Package: `npx wxt zip` → `.output/x-simplify-<version>-chrome.zip`
 - Type-check: `./node_modules/.bin/tsc --noEmit` (Vite build does NOT type-check)
 
+## Releasing (do all of these together — every time)
+
+The version source of truth is `wxt.config.ts` → `manifest.version` (the build
+reads it from there, NOT from `package.json`). Keep `package.json`'s `version`
+in sync anyway so the two never drift.
+
+For every release, in order:
+
+1. Bump `version` in **both** `wxt.config.ts` and `package.json` (semver: patch
+   for a bug fix, minor for a feature).
+2. `./node_modules/.bin/tsc --noEmit` and `bun run build` — both must pass.
+3. Commit the fix + version bump.
+4. **Tag it** — annotated, on the release commit: `git tag -a vX.Y.Z -m "..."`.
+   Every published version MUST have a matching `vX.Y.Z` tag (0.1.0–0.3.0 shipped
+   untagged — don't repeat that).
+5. Package: `npx wxt zip` → upload `.output/x-simplify-X.Y.Z-chrome.zip` to the
+   Chrome Web Store.
+6. Push: `git push origin main --tags`.
+
+Gotchas that already bit us once:
+- **Do NOT `git commit --amend` a commit that's already been pushed.** It creates
+  a sibling commit, and the tag/branch then diverge. Add a follow-up commit instead.
+- **Never force-push a branch.** If a tag genuinely must be moved, re-create it and
+  push with `--force-with-lease` (a bare `git push -f` is blocked by a hook).
+
 ## Local testing in a real browser
 
 Testing the extension on x.com requires driving a **real, logged-in Google
