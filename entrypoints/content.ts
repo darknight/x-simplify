@@ -150,12 +150,20 @@ function watchVideoTweets() {
 function processTweet(article: HTMLElement, expandedTweets: Set<string>) {
   const tweetId = getTweetId(article);
 
-  // X recycles article nodes while scrolling — clean stale markup
-  // when a processed node now renders a different tweet.
-  if (article.dataset.xsVideoId && article.dataset.xsVideoId !== tweetId) {
+  // Ads / "boosted" tweets have no /status/ permalink, so getTweetId returns
+  // null. Fall back to a sentinel string so id-less tweets still get a stable
+  // processed-marker: without one the guards below never fire, and since each
+  // placeholder insertion is a DOM mutation the observer re-scans on, the
+  // placeholder duplicates without bound as you scroll.
+  const marker = tweetId ?? '';
+
+  // X recycles article nodes while scrolling — clean stale markup when a
+  // processed node now renders a different tweet, otherwise skip nodes we've
+  // already collapsed (idempotent across the observer's repeated scans).
+  const marked = article.dataset.xsVideoId;
+  if (marked !== undefined && marked !== marker) {
     cleanupTweet(article);
-  }
-  if (article.dataset.xsVideoId === tweetId && article.querySelector('.xs-video-placeholder')) {
+  } else if (marked === marker && article.querySelector('.xs-video-placeholder')) {
     return;
   }
 
@@ -197,7 +205,7 @@ function processTweet(article: HTMLElement, expandedTweets: Set<string>) {
   });
   target.before(placeholder);
 
-  if (tweetId) article.dataset.xsVideoId = tweetId;
+  article.dataset.xsVideoId = marker;
 }
 
 function cleanupTweet(article: HTMLElement) {

@@ -4,7 +4,7 @@ export default defineConfig({
   manifest: {
     name: 'X-Simplify',
     description: 'Simplify X.com by hiding distracting UI elements with pure CSS',
-    version: '0.3.0',
+    version: '0.3.1',
     permissions: ['storage'],
     host_permissions: ['https://x.com/*', 'https://twitter.com/*'],
     icons: {
